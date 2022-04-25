@@ -1,0 +1,78 @@
+<div class="container mt-5">
+
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h2>Employee details</h2>
+    <button class="btn btn-primary" (click)="add()">Add employee</button>
+  </div>
+
+  <div class="text-center border mt-5 py-5" *ngIf="employeeList.length == 0">
+    <h1>No employee details found!</h1>
+  </div>
+
+  <table class="table" *ngIf="employeeList.length != 0">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Department</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let emp of employeeList;let i=index">
+        <tr>
+          <th scope="row">{{ i+1 }}</th>
+          <td>{{ emp.name }}</td>
+          <td>{{ emp.email }}</td>
+          <td>{{ emp.number }}</td>
+          <td>{{ emp.department }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary mr-2" (click)="edit(emp)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="delete(emp)">Delete</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="addEditEmployee" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" *ngIf="employee">
+      <form name="employeeForm" id="employeeForm">
+        <div class="modal-header">
+          <h2 class="modal-title">{{employee.id ? 'Edit' : 'Add'}} employee</h2>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="employee.name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required [(ngModel)]="employee.email">
+          </div>
+          <div class="mb-3">
+            <label for="number" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="number" name="number" minlength="10" maxlength="10" required
+              [(ngModel)]="employee.number">
+          </div>
+          <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" class="form-control" id="department" name="department" required
+              [(ngModel)]="employee.department">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="saveEmployee()">Save</button>
+          <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
